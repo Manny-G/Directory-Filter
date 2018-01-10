@@ -1,11 +1,17 @@
 #! python3
-# filter.py - Search a directory recursive for files with repeat names and
-#			  separate them into different folders
+# filter.py [ext] - Search a directory recursive for files with repeat names and
+#					separate them into different folders. Enter desired file
+#					extension as an argument in the command line.
 
-import glob, os, shutil
+import glob, os, shutil, sys
 
-os.makedirs("originals")
-os.makedirs("repeats")
+arg_in = sys.argv[1]
+orig_dir = "originals_" + arg_in
+rep_dir = "repeats_" + arg_in
+generic_file = "./**/*." + arg_in
+
+os.makedirs(orig_dir)
+os.makedirs(rep_dir)
 os.chdir("./test_dir/")
 
 # initialize empty dictionary and current working directory
@@ -16,7 +22,7 @@ print("\nCurrently in", curr_dir, "\n")
 print("List of all recursive files:")
 
 # recurse through all files in the directory
-for filename in glob.iglob('./**/*.txt', recursive = True):
+for filename in glob.iglob(generic_file, recursive = True):
 	
 	# extract filenames and filepaths out into our dictionary
 	base_name = os.path.basename(filename)
@@ -43,10 +49,10 @@ for filename in filenames_dict:
 		
 		if counter == 1:
 			source_dir = "./test_dir/" + filepath + "/" + filename
-			dest_dir = "./originals/" + filename
+			dest_dir = "./" + orig_dir + "/" + filename
 			shutil.move( source_dir, dest_dir )
 			
 		else:
 			source_dir = "./test_dir/" + filepath + "/" + filename
-			dest_dir = "./repeats/" + filename
+			dest_dir = "./" + rep_dir + "/" + filename
 			shutil.move( source_dir, dest_dir )
