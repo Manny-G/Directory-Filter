@@ -1,18 +1,22 @@
 #! python3
-# filter.py [ext] - Search a directory recursive for files with repeat names and
-#					separate them into different folders. Enter desired file
-#					extension as an argument in the command line.
+# filter.py [dir_name] [file_ext] - Search a directory recursive for files with
+#									repeat names and separate them into different
+#									folders. Enter desired directory to filter
+#									and file extension as arguments in the
+#									command line.
 
 import glob, os, shutil, sys
 
-arg_in = sys.argv[1]
-orig_dir = "originals_" + arg_in
-rep_dir = "repeats_" + arg_in
-generic_file = "./**/*." + arg_in
+dir_name = sys.argv[1]
+file_ext = sys.argv[2]
+
+orig_dir = "originals_" + file_ext
+rep_dir = "repeats_" + file_ext
+generic_file = "./**/*." + file_ext
 
 os.makedirs(orig_dir)
 os.makedirs(rep_dir)
-os.chdir("./test_dir/")
+os.chdir(dir_name)
 
 # initialize empty dictionary and current working directory
 filenames_dict = {}
