@@ -41,7 +41,6 @@ for filename in glob.iglob(generic_file, recursive = True):
 os.chdir("../")
 
 
-
 for filename in filenames_dict:
 	# keep track of how many times we've seen this file
 	counter = 0
@@ -52,11 +51,11 @@ for filename in filenames_dict:
 		print( "Encounter number {} at path {}".format(counter, filepath) )
 		
 		if counter == 1:
-			source_dir = "./test_dir/" + filepath + "/" + filename
+			source_dir = "./" + dir_name + filepath + "/" + filename
 			dest_dir = "./" + orig_dir + "/" + filename
 			shutil.move( source_dir, dest_dir )
 			
 		else:
-			source_dir = "./test_dir/" + filepath + "/" + filename
+			source_dir = "./" + dir_name + filepath + "/" + filename
 			dest_dir = "./" + rep_dir + "/" + filename
 			shutil.move( source_dir, dest_dir )
