@@ -63,6 +63,6 @@ for filename in filenames_dict:
 		
 		source_dir = './' + dir_name + filepath + '/' + filename
 		dest_dir = './' + orig_dir + '/' + filename if counter == 1 else './' + rep_dir + '/' + filename
-		shutil.copy(source_dir, dest_dir)
+		shutil.move(source_dir, dest_dir)
 		
 

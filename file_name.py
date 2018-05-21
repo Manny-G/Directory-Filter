@@ -23,6 +23,8 @@ time.sleep(5)
 os.makedirs(found_dump)
 absolute_path_found_dump = os.path.abspath(found_dump)
 
+error_log = open('error_log.txt', 'w')
+
 try:
 	if sys.argv[3] == '1' or sys.argv[3] == 'true' or sys.argv[3] == 'True':
 		regex_on = True
@@ -46,6 +48,7 @@ except:
 	print('no valid sys.argv[4] (case_sensitive) input, setting to default value', case_sensitive)
 
 if not(dir_name == '.' or dir_name == './' or dir_name == '.\\'):
+	starting_dir = os.getcwd()
 	os.chdir(dir_name)
 
 curr_dir = os.getcwd()
@@ -65,13 +68,33 @@ for dirs, subdirs, files in os.walk(curr_dir):
 					      '(case insensitive)')
 					source_dir = os.path.join(dirs, file)
 					dest_dir = os.path.join(absolute_path_found_dump, file)
-					print('copying', source_dir, 'into', dest_dir, '\n')
-					shutil.copy(source_dir, dest_dir)
+					
+					try:
+						print('moving', source_dir, 'into', dest_dir, '\n')
+						shutil.move(source_dir, dest_dir)
+					except:
+						error_log.write('in directory %s\n' % str(dirs))
+						error_log.write('on file %s\n' % str(file))
 			
 			else:
 				if file.startswith(str(file_name)):
 					print('file with name', file, 'had pattern', str(file_name))
 					source_dir = os.path.join(dirs, file)
 					dest_dir = os.path.join(absolute_path_found_dump, file)
-					print('copying', source_dir, 'into', dest_dir, '\n')
-					shutil.copy(source_dir, dest_dir)
+					
+					try:
+						print('moving', source_dir, 'into', dest_dir, '\n')
+						shutil.move(source_dir, dest_dir)
+						
+					except:
+						error_log.write('in directory %s\n' % str(dirs))
+						error_log.write('on file %s\n' % str(file))
+
+if not(dir_name == '.' or dir_name == './' or dir_name == '.\\'):
+	os.chdir(starting_dir)
+
+error_log.flush()
+error_log.close()
+
+if os.path.getsize('error_log.txt') == 0:
+	os.remove('error_log.txt')
