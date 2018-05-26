@@ -70,8 +70,8 @@ for dirs, subdirs, files in os.walk(curr_dir):
 					dest_dir = os.path.join(absolute_path_found_dump, file)
 					
 					try:
-						print('moving', source_dir, 'into', dest_dir, '\n')
-						shutil.move(source_dir, dest_dir)
+						print('copying', source_dir, 'into', dest_dir, '\n')
+						shutil.copy(source_dir, dest_dir)
 					except:
 						error_log.write('in directory %s\n' % str(dirs))
 						error_log.write('on file %s\n' % str(file))
@@ -83,8 +83,8 @@ for dirs, subdirs, files in os.walk(curr_dir):
 					dest_dir = os.path.join(absolute_path_found_dump, file)
 					
 					try:
-						print('moving', source_dir, 'into', dest_dir, '\n')
-						shutil.move(source_dir, dest_dir)
+						print('copying', source_dir, 'into', dest_dir, '\n')
+						shutil.copy(source_dir, dest_dir)
 						
 					except:
 						error_log.write('in directory %s\n' % str(dirs))
